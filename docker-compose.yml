@@ -1,0 +1,31 @@
+version: '3.4'
+services:
+  web:
+    container_name: app
+    hostname: app
+    build: ./app
+    tty: true
+    ports:
+      - "15000:5000"
+    volumes:
+      - './app:/home/app'
+
+  postgres-db:
+    container_name: postgres-db
+    hostname: postgres-db
+    image: postgres:10.10
+    restart: always
+    environment:
+      POSTGRES_USER: root
+      POSTGRES_PASSWORD: phil.std.poc
+      POSTGRES_DB: poc_db
+      TZ: GMT-3
+    ports: 
+      - "20000:5432"
+    volumes:
+      - ~/Docker/Volumes/PostgreSQL:/var/lib/postgresql/data
+
+
+volumes:
+  app:
+

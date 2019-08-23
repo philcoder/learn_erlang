@@ -1,3 +1,4 @@
+# tem que adaptar para os exercicios do hackerank
 APP_NAME := lang_features
 START_METHOD := main
 

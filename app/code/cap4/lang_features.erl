@@ -8,7 +8,7 @@
 -export([main/0]).
 
 main() -> 
-    func4().
+    func6().
 
 func1() ->
     ResultSquare = area({square, 9}),
@@ -67,6 +67,60 @@ func4() ->
     io:fwrite("~w\n",[GenLists]),
 
     for(1, 5, fun(E) -> io:fwrite("hello world loop\n") end),
+
+    fend.
+
+func5() ->
+    Elems = [1,2,3,4,5],
+    %funcao anonima
+    Sum = fun AnnoFuncSum([H|T]) -> H + AnnoFuncSum(T); %onde percorre a list pela recursao
+            AnnoFuncSum([]) -> 0  %cond de parada
+    end,
+    io:fwrite("~w\n",[Sum(Elems)]),
+
+    Map = fun AnnoFuncMap(_, []) -> [];
+            AnnoFuncMap(Func, [H|T]) -> [Func(H) | AnnoFuncMap(Func, T)]
+    end,
+    ResultMap = Map(fun(E) -> E * 3 end, Elems),
+    io:fwrite("~w\n",[ResultMap]),
+
+    %uma funcao dentro da outra
+    Total = Sum(Map(fun(E) -> E * 5 end, Elems)),
+    io:fwrite("~w\n",[Total]),
+
+    fend.
+
+func6() ->
+    Elems = [1,2,3,4,5],
+
+    %map usando a lib do erlang
+    ResultMap = lists:map(fun(E) -> E * 2 end, Elems),
+    io:fwrite("~w\n",[ResultMap]),
+
+    %uma forma de realizar um 'map' de forma mais simples
+    %o nome desse processo é 'list comprehensions'
+    ResultMapCompact = [E * 3 || E <- Elems],
+    io:fwrite("~w\n",[ResultMapCompact]),
+
+    %usando com elementos mais complexos
+    BuyList=[{oranges,4},{newspaper,1},{apples,10},{pears,6},{milk,3}],
+    ResultComplexElems = [{Name, 3*Quantity} || {Name, Quantity} <- BuyList],
+    io:fwrite("~w\n",[ResultComplexElems]),
+
+    PriceElems = [cost(Name) || {Name, Quantity} <- BuyList],
+    io:fwrite("~w\n",[PriceElems]),
+
+    Total = lists:sum([cost(Name) * Quantity || {Name, Quantity} <- BuyList]),
+    io:fwrite("Total Elements: ~w\n",[Total]),
+
+    %exemplo de filter usando tuplas no caso elem 'a'
+    Result = [ X || {a, X} <- [{a,1},{b,2},{c,3},{a,4},hello,"wow"]],
+    io:fwrite("Filter Tuples 'a' content: ~w\n",[Result]),
+
+    fend.
+
+func7() ->
+    %TODO: parei na construcao de um quicksort
 
     fend.
 

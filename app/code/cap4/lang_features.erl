@@ -8,7 +8,7 @@
 -export([main/0]).
 
 main() -> 
-    func8().
+    func10().
 
 func1() ->
     ResultSquare = area({square, 9}),
@@ -156,6 +156,54 @@ func8() ->
 
     fend.
 
+func9() ->
+    % http://erlang.org/doc/programming_examples/list_comprehensions.html
+    Anagrams = fun Perms([]) -> [[]];
+                Perms(String) -> [[Head|Tail] || Head <- String, Tail <- Perms(String -- [Head])]
+    end,
+
+    Result = Anagrams("abc"),
+    io:format("~w~n", [Result]),
+
+    % usando 'guards' para detectar o maximo valor entre dois valores, é uma forma de 'if' mas usando partterns
+    Max = fun MaxValueGuards(X,Y) when X > Y -> X;
+                MaxValueGuards(X,Y) -> Y
+    end,
+
+    io:format("~w~n", [Max(123,125)]),
+
+    % guards uasndo 'if', o erlang vai pulando até encontrar um 'true' entre as guards para sair desse bloco do 'if'
+    % OBS: a guard 'true' é obrigatoria, caso não use crie um atom 'done' para não realizar nada
+    MaxIfGuards = fun IfGuards(X,Y) ->
+        if 
+            X > Y -> X;
+            true -> Y % 'else' do 'if'
+        end
+    end,
+
+    io:format("~w~n", [MaxIfGuards(123,122)]),
+
+    fend.
+
+%contruir list na ordem natural (mais otimo esse codigo)
+func10() ->
+    
+    Elems = [1,2,3,4,5,6],
+
+    Result = appendList(Elems, 123),
+    io:fwrite("~w\n",[Result]),
+    io:fwrite("~w\n",[sum(Elems)]),
+    fend.
+
+%aquele codigo usando ++ ele fica criando copia da lista para cada elemento que contem nessa lista até concatenar tudo...
+appendList(List, Elem) -> appendList(List, [], Elem).
+appendList([H|T], ResultList, Elem) -> appendList(T, [H|ResultList], Elem);
+appendList([], ResultList, Elem) -> lists:reverse([Elem|ResultList]).
+
+% essa func 'sum' escrita de forma otima em relação a AnnoFuncSum, usando high-order function
+sum(List) -> sum(List,0).
+sum([Head|Tail], Acc) -> sum(Tail, Acc + Head);
+sum([], Acc) -> Acc.
 
 %exemplo de loop 'for' em erlang
 for(Max, Max, F) -> [F(Max)]; %quando Init == Max ai para a recursão

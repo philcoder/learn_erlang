@@ -8,7 +8,11 @@
 -export([main/0]).
 
 main() -> 
+<<<<<<< HEAD
     func6().
+=======
+    func10().
+>>>>>>> b1d3e6db38866eaf27f68cd3023462897c7d8127
 
 func1() ->
     ResultSquare = area({square, 9}),
@@ -120,10 +124,98 @@ func6() ->
     fend.
 
 func7() ->
+<<<<<<< HEAD
     %TODO: parei na construcao de um quicksort
 
     fend.
 
+=======
+    Elems = [23,6,2,-9,27,400,78,-45,61,82,14],
+
+    %exemplo elegante de quicksort
+    %essa linha que tem "++ [Pivot] ++" concat o elemento na lista
+    
+    %esse algoritmo pega o pivot = 23 e seleciona todos os elementos menores que ele e todos os maiores
+    %ordena esses elementos e na volta da recursão vai concat todos os elementos em ordem crescente...
+    QSort = fun QuickSort([]) -> [];
+            QuickSort([Pivot|Tail]) -> QuickSort([X || X <- Tail, X < Pivot])
+            ++ [Pivot] ++
+            QuickSort([X || X <- Tail, X >= Pivot]) %condição de filtro da 'list comprehensions'
+    end,
+
+    Result = QSort(Elems),
+    io:fwrite("Original list: ~w\n",[Elems]),
+    io:fwrite("Ordered list: ~w\n",[Result]),
+
+    fend.
+
+func8() ->
+    %Pythagorean triplets are sets of integers {A,B,C} where A^2 + B^2 = C^2 and where the sum of the sides is less than or equal to N .
+    Pythag = fun Pythagorean(Num) ->
+        [
+            {A ,B, C} ||
+            A <- lists:seq(1,Num), %cria uma lista de todos os numeros de 1 até N
+            B <- lists:seq(1,Num), 
+            C <- lists:seq(1,Num),
+            A + B + C =< Num, % condição do filtro
+            A*A + B*B =:= C*C % 'e' condição do filtro
+        ]
+    end,
+
+    io:fwrite("Original list: ~w\n",[Pythag(16)]),
+
+    fend.
+
+func9() ->
+    % http://erlang.org/doc/programming_examples/list_comprehensions.html
+    Anagrams = fun Perms([]) -> [[]];
+                Perms(String) -> [[Head|Tail] || Head <- String, Tail <- Perms(String -- [Head])]
+    end,
+
+    Result = Anagrams("abc"),
+    io:format("~w~n", [Result]),
+
+    % usando 'guards' para detectar o maximo valor entre dois valores, é uma forma de 'if' mas usando partterns
+    Max = fun MaxValueGuards(X,Y) when X > Y -> X;
+                MaxValueGuards(X,Y) -> Y
+    end,
+
+    io:format("~w~n", [Max(123,125)]),
+
+    % guards uasndo 'if', o erlang vai pulando até encontrar um 'true' entre as guards para sair desse bloco do 'if'
+    % OBS: a guard 'true' é obrigatoria, caso não use crie um atom 'done' para não realizar nada
+    MaxIfGuards = fun IfGuards(X,Y) ->
+        if 
+            X > Y -> X;
+            true -> Y % 'else' do 'if'
+        end
+    end,
+
+    io:format("~w~n", [MaxIfGuards(123,122)]),
+
+    fend.
+
+%contruir list na ordem natural (mais otimo esse codigo)
+func10() ->
+    
+    Elems = [1,2,3,4,5,6],
+
+    Result = appendList(Elems, 123),
+    io:fwrite("~w\n",[Result]),
+    io:fwrite("~w\n",[sum(Elems)]),
+    fend.
+
+%aquele codigo usando ++ ele fica criando copia da lista para cada elemento que contem nessa lista até concatenar tudo...
+appendList(List, Elem) -> appendList(List, [], Elem).
+appendList([H|T], ResultList, Elem) -> appendList(T, [H|ResultList], Elem);
+appendList([], ResultList, Elem) -> lists:reverse([Elem|ResultList]).
+
+% essa func 'sum' escrita de forma otima em relação a AnnoFuncSum, usando high-order function
+sum(List) -> sum(List,0).
+sum([Head|Tail], Acc) -> sum(Tail, Acc + Head);
+sum([], Acc) -> Acc.
+
+>>>>>>> b1d3e6db38866eaf27f68cd3023462897c7d8127
 %exemplo de loop 'for' em erlang
 for(Max, Max, F) -> [F(Max)]; %quando Init == Max ai para a recursão
 for(Init, Max, F) -> [F(Init)|for(Init+1, Max, F)].

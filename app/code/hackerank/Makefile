@@ -1,5 +1,5 @@
 # tem que adaptar para os exercicios do hackerank
-APP_NAME := solution11
+APP_NAME := solution13
 START_METHOD := main
 
 all: compile run
@@ -19,7 +19,9 @@ run:
 	#printf '2\n-4\n3\n-1\n23\n-4\n-54\n' > /tmp/in (solution8)
 	#printf '4\n20.0000\n5.0000\n0.5000\n-0.5000\n' > /tmp/in (solution9)
 	#printf '1 2 3 4 5\n6 7 8 9 10\n1 4\n' > /tmp/in (solution10)
-	printf '2\n3\n1 1\n2 2\n3 3\n4\n1 2\n2 4\n3 6\n4 8\n' > /tmp/in
+	#printf '2\n3\n1 1\n2 2\n3 3\n4\n1 2\n2 4\n3 6\n4 8\n' > /tmp/in (solution11)
+	#printf '5\n' > /tmp/in (solution12)
+	printf '10000 12345\n' > /tmp/in
 
 	#call erlang executation
 	cat /tmp/in | erl -noshell -pa /tmp/ebin/ -s $(APP_NAME) $(START_METHOD) -s init stop

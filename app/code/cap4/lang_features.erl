@@ -8,11 +8,7 @@
 -export([main/0]).
 
 main() -> 
-<<<<<<< HEAD
-    func6().
-=======
     func10().
->>>>>>> b1d3e6db38866eaf27f68cd3023462897c7d8127
 
 func1() ->
     ResultSquare = area({square, 9}),
@@ -124,12 +120,6 @@ func6() ->
     fend.
 
 func7() ->
-<<<<<<< HEAD
-    %TODO: parei na construcao de um quicksort
-
-    fend.
-
-=======
     Elems = [23,6,2,-9,27,400,78,-45,61,82,14],
 
     %exemplo elegante de quicksort
@@ -215,7 +205,6 @@ sum(List) -> sum(List,0).
 sum([Head|Tail], Acc) -> sum(Tail, Acc + Head);
 sum([], Acc) -> Acc.
 
->>>>>>> b1d3e6db38866eaf27f68cd3023462897c7d8127
 %exemplo de loop 'for' em erlang
 for(Max, Max, F) -> [F(Max)]; %quando Init == Max ai para a recursão
 for(Init, Max, F) -> [F(Init)|for(Init+1, Max, F)].

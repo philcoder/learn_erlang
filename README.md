@@ -47,4 +47,4 @@ e.g.: erl -noshell -s hello hello_world -s init stop
 ```
 make all
 ```
-<b>Inside Makefile change "main" script to call as you wish</b>
+Inside Makefile change "main" script to call as you wish

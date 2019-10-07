@@ -6,7 +6,7 @@ services:
     build: ./app
     tty: true
     ports:
-      - "15000:5000"
+      - "15000:10000"
     volumes:
       - './app:/home/app'
 
